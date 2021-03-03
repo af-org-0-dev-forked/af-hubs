@@ -522,7 +522,10 @@ export default class DialogAdapter {
           const { consumerId } = notification.data;
           const consumer = this._consumers.get(consumerId);
 
-          if (!consumer) break;
+          if (!consumer) {
+            info(`consumerClosed event received without related consumer: ${consumerId}`);
+            break;
+          }
 
           consumer.close();
           this.removeConsumer(consumer.id);
@@ -554,7 +557,10 @@ export default class DialogAdapter {
 
           const consumer = this._consumers.get(consumerId);
 
-          if (!consumer) break;
+          if (!consumer) {
+            info(`consumerLayersChanged event received without related consumer: ${consumerId}`);
+            break;
+          }
 
           this._consumerStats[consumerId] = this._consumerStats[consumerId] || {};
           this._consumerStats[consumerId]["spatialLayer"] = spatialLayer;
@@ -572,7 +578,10 @@ export default class DialogAdapter {
 
           const consumer = this._consumers.get(consumerId);
 
-          if (!consumer) break;
+          if (!consumer) {
+            info(`consumerScore event received without related consumer: ${consumerId}`);
+            break;
+          }
 
           this._consumerStats[consumerId] = this._consumerStats[consumerId] || {};
           this._consumerStats[consumerId]["score"] = score;
